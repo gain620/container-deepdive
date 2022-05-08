@@ -47,6 +47,7 @@ func init() {
 	rootCmd.AddCommand(getCmd)
 	getCmd.AddCommand(weatherCmd)
 	weatherCmd.PersistentFlags().StringP("city", "c", "seoul", "Input name of the city.")
-	//weatherCmd.PersistentFlags().
+	weatherCmd.PersistentFlags().StringP("aqi", "a", "yes", "Get air quality of the target location.")
+	weatherCmd.PersistentFlags().StringP("temp", "t", "celsius", "Input type of the temperature. e.g,) conctl get weather --temp=celsius")
 
 }

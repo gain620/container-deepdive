@@ -15,31 +15,30 @@ var weatherCmd = &cobra.Command{
 	Short:   "Get current weather info according to your current location",
 	Example: "conctl weather [options] [args]",
 	Args: func(cmd *cobra.Command, args []string) error {
-		//if len(args) != 1 {
-		//	return errors.New("enter the URL")
-		//}
-		//
-		//_, err := url.ParseRequestURI(args[0])
-		//if err != nil {
-		//	return errors.New("invalid URL")
-		//}
-
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Getting the current temperature from the weather API server ... %v \n", args[0:])
+		fmt.Printf("Requesting the current temperature from the weather API server ... \n")
 
 		city, err := cmd.Flags().GetString("city")
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		temp, err := cmd.Flags().GetString("temp")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		aqi, err := cmd.Flags().GetString("aqi")
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		weatherInfo := &model.WeatherInfo{}
-		var celsius = "\u2103"
-		//var fahrenheit = "\u2109"
-		var aqi string = "yes"
 
 		resp, err := req.C().
-			SetUserAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1").
+			SetUserAgent(config.UserAgent).
 			SetTimeout(5 * time.Second).R().
 			SetPathParams(map[string]string{
 				"api_key": config.WeatherAPIKey,
@@ -57,8 +56,20 @@ var weatherCmd = &cobra.Command{
 				log.Fatal(err)
 			}
 
-			fmt.Printf("[%s]'s current temperature is : %v%v", weatherInfo.Location.Name, weatherInfo.Current.TempC, celsius)
+			var tempType string
+			var currTemp float64
+			switch temp {
+			case "celsius":
+				tempType = "\u2103"
+				currTemp = weatherInfo.Current.TempC
+			case "fahrenheit":
+				tempType = "\u2109"
+				currTemp = weatherInfo.Current.TempF
+			default:
+				log.Fatal("Please type the appropriate temperature type, celsius or fahrenheit")
+			}
 
+			fmt.Printf("[%s]'s current temperature is : %v%v", weatherInfo.Location.Name, currTemp, tempType)
 		} else {
 			log.Fatal("bad response:", resp)
 		}
