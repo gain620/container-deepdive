@@ -17,9 +17,12 @@ jobs:
 #    - name: configure
 #      run: ./configure
       
-    - name: Install dependencies
+    - name: Test submodules before code integration
+      run: make test
+
+    - name: Make all
       run: make all
-      
+
 #    - name: Run check
 #      run: make check
 #

@@ -45,7 +45,7 @@ $(project):
 	@go build -o ${BIN_DIR}/$@/${CONCTL_BIN} .
 	@#go build -o ${BIN_DIR}/$@/${CONCTL_BIN} ./$@/${CONCTL_BIN}
 
-test: all ## Launch tests
+test: ## Launch tests
 	go test ./...
 
 clean: ## Clean generated files
