@@ -1,2 +1,2 @@
 # weather-cmd
-a simple cobra cli tool for getting weather info from the API server
+a simple cobra cli tool for getting the weather info from the API server
