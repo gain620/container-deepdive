@@ -1,2 +1,2 @@
-# container-deepdive
-deep dive into cgroup, namespace
+# weather-cmd
+a simple cobra cli tool for getting weathers
