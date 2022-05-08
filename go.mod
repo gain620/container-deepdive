@@ -1,6 +1,6 @@
 module github.com/gain620/container-deepdive
 
-go 1.18
+go 1.17
 
 require (
 	github.com/imroc/req/v3 v3.11.0
