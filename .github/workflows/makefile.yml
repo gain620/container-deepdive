@@ -17,14 +17,11 @@ jobs:
     - name: Check go version
       run: go version
     
-#    - name: configure
-#      run: ./configure
-      
     - name: Test submodules before code integration
       run: make test
 
-    - name: Make all
-      run: make all
+#    - name: Make all
+#      run: make all
 
 #    - name: Run check
 #      run: make check
