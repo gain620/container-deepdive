@@ -15,41 +15,52 @@ var weatherCmd = &cobra.Command{
 	Short:   "Get current weather info according to your current location",
 	Example: "conctl weather [options] [args]",
 	Args: func(cmd *cobra.Command, args []string) error {
+		//if len(args) != 1 {
+		//	return errors.New("enter the URL")
+		//}
+		//
+		//_, err := url.ParseRequestURI(args[0])
+		//if err != nil {
+		//	return errors.New("invalid URL")
+		//}
+
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Getting weather from the API server ... %v \n", args[0:])
+		fmt.Printf("Getting the current temperature from the weather API server ... %v \n", args[0:])
 
-		//var cityArg string
-		var weatherInfo model.WeatherInfo
+		city, err := cmd.Flags().GetString("city")
+		if err != nil {
+			log.Fatal(err)
+		}
+		weatherInfo := &model.WeatherInfo{}
 		var celsius = "\u2103"
 		//var fahrenheit = "\u2109"
-		//conctl weather --aqi --city=seoul
+		var aqi string = "yes"
 
 		resp, err := req.C().
 			SetUserAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1").
-			SetTimeout(5*time.Second).R().
-			SetHeader("Accept", "application/vnd.github.v3+json").
+			SetTimeout(5 * time.Second).R().
 			SetPathParams(map[string]string{
 				"api_key": config.WeatherAPIKey,
-				"city":    "seoul",
+				"city":    city,
 			}).
-			Get("https://api.weatherapi.com/v1/current.json?key={api_key}&q={city}&aqi=yes")
+			Get(fmt.Sprintf("https://api.weatherapi.com/v1/current.json?key={api_key}&q={city}&aqi=%s", aqi))
 
 		if err != nil {
-			log.Warn(fmt.Errorf("conctl weather - couldn't get weather info from the api server : %w", err))
+			log.Fatal(fmt.Errorf("conctl weather - couldn't get weather info from the api server : %w", err))
 		}
 
 		if resp.IsSuccess() {
 			err = resp.Unmarshal(weatherInfo)
 			if err != nil {
-				log.Warn(err)
+				log.Fatal(err)
 			}
 
 			fmt.Printf("[%s]'s current temperature is : %v%v", weatherInfo.Location.Name, weatherInfo.Current.TempC, celsius)
 
 		} else {
-			log.Warn("bad response:", resp)
+			log.Fatal("bad response:", resp)
 		}
 
 	},

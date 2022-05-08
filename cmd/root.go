@@ -21,6 +21,15 @@ var rootCmd = &cobra.Command{
 	},
 }
 
+// getCmd represents the get command
+var getCmd = &cobra.Command{
+	Use:   "get",
+	Short: "get specific obejct",
+	Run: func(cmd *cobra.Command, args []string) {
+		cmd.Help()
+	},
+}
+
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
@@ -34,4 +43,10 @@ func init() {
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(archCmd)
 	rootCmd.AddCommand(shellCmd)
+
+	rootCmd.AddCommand(getCmd)
+	getCmd.AddCommand(weatherCmd)
+	weatherCmd.PersistentFlags().StringP("city", "c", "seoul", "Input name of the city.")
+	//weatherCmd.PersistentFlags().
+
 }
