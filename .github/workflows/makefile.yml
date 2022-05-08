@@ -17,8 +17,8 @@ jobs:
     - name: Check go version
       run: go version
     
-    - name: Test submodules before code integration
-      run: make test
+#    - name: Test submodules before code integration
+#      run: make test
 
 #    - name: Make all
 #      run: make all
