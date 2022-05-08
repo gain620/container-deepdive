@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"syscall"
 )
 
 var shellCmd = &cobra.Command{
@@ -21,6 +22,9 @@ var shellCmd = &cobra.Command{
 		hostCmd.Stdin = os.Stdin
 		hostCmd.Stdout = os.Stdout
 		hostCmd.Stderr = os.Stderr
+		hostCmd.SysProcAttr = &syscall.SysProcAttr{
+			Cloneflags: syscall.CLONE_NEWUTS,
+		}
 
 		err := hostCmd.Run()
 		if err != nil {
