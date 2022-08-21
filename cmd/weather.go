@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/gain620/container-deepdive/config"
-	"github.com/gain620/container-deepdive/model"
+	"github.com/gain620/weatherctl/config"
+	"github.com/gain620/weatherctl/model"
 	"github.com/imroc/req/v3"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"

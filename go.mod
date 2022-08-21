@@ -1,4 +1,4 @@
-module github.com/gain620/container-deepdive
+module github.com/gain620/weatherctl
 
 go 1.17
 

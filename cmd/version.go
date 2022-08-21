@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/gain620/container-deepdive/config"
+	"github.com/gain620/weatherctl/config"
 	"github.com/spf13/cobra"
 )
 
