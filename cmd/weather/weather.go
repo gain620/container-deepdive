@@ -1,4 +1,4 @@
-package cmd
+package weather
 
 import (
 	"fmt"
@@ -10,10 +10,10 @@ import (
 	"time"
 )
 
-var weatherCmd = &cobra.Command{
+var WeatherCmd = &cobra.Command{
 	Use:     "weather",
 	Short:   "Get current weather info according to your current location",
-	Example: "conctl weather [options] [args]",
+	Example: "weatherctl weather [options] [args]",
 	Args: func(cmd *cobra.Command, args []string) error {
 		return nil
 	},
@@ -66,12 +66,12 @@ var weatherCmd = &cobra.Command{
 				tempType = "\u2109"
 				currTemp = weatherInfo.Current.TempF
 			default:
-				log.Fatal("Please type the appropriate temperature type, celsius or fahrenheit")
+				log.Fatalf("Please type the appropriate temperature type, celsius or fahrenheit")
 			}
 
 			fmt.Printf("[%s]'s current temperature is : %v%v", weatherInfo.Location.Name, currTemp, tempType)
 		} else {
-			log.Fatal("bad response:", resp)
+			log.Fatalf("bad response: %v", resp)
 		}
 
 	},

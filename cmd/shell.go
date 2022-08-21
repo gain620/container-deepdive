@@ -11,7 +11,7 @@ import (
 var shellCmd = &cobra.Command{
 	Use:     "shell",
 	Short:   "Use host's bash command line",
-	Example: "conctl shell [command] [options] [args]",
+	Example: "weatherctl shell [command] [options] [args]",
 	Args: func(cmd *cobra.Command, args []string) error {
 		return nil
 	},
